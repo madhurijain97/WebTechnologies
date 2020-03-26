@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@font-face{
+	font-family: Futura-PT-Madhuri;
+	src: url(futura_medium_bt.ttf)
+}
+
+@font-face{
+	font-family: Futura-PT-Madhuri-Bold;
+	src: url(Futura_Bold_Font.ttf)
+}
+
+@font-face{
+	font-family: Futura-PT-Madhuri-light;
+	src: url(futura_light_bt.ttf)
+}
+
+
+html, body{
+	height: 100%;
+	color: white;
+	width: 100%
+}
+
+a{
+	color: white;
+	text-decoration: none
+}
+
+li{
+	display: inline;
+	color: white;
+	font-family: 'Merriweather Sans', sans-serif;
+}
+
+button{
+	padding: 9px;
+	text-align: center;
+	display: inline-block;
+	padding-left: 22px;
+	padding-right: 22px;
+	font-size: 16px
+}
+
+h1{
+	font-size: 50px
+}
+
+i{
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	display: inline-block;
+	padding: 13px
+}
+
+.outerBoundary{
+	margin-right: 350px;
+	margin-top: 140px;
+	margin-left: 300px;
+	margin-bottom: 125px
+}
+
+.rows{
+	display: flex;
+	margin-bottom: 10px
+}
+
+.columns{
+	flex: 50%;
+	margin-right: 10px
+}
+
+.parallax{
+	background-attachment: fixed;
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	/*margin: 0 auto*/
+	
+}
+
+.textDiv{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100%;
+	color: black
+}
+
+.textDiv1{
+	display: table-cell;
+	text-align: center;
+	width: 100%;
+	color: black
+}
+
+.secondTextDiv{
+	display: table-cell;
+	/*vertical-align: middle;*/
+	text-align: left;
+	width: 1800px;
+}
+
+.blankDiv{
+	width: 100%;
+	height: 130px;
+	color: white
+}
+
+.buttonStyle{
+	background-color: white;
+	height: 50px;
+	border-style: solid
+}
+
+.titleWeb{
+	color: white
+}
+
+.navigationBar{
+	width: auto;
+	height: auto;
+	float: right;
+	margin-top: 26px;
+	margin-right: 60px;
+	color: black;
+	margin-bottom: 7px
+}
+
+.navigationBar li{
+	margin-right: 8px;
+	float: left;
+	height: 60px;
+	font-size: 12px;
+}
+
+li a{
+	color: white
+}
+
+.websiteName{
+	width: auto;
+	height: 60px;
+	float: left;
+	margin-left: 80px;
+	margin-top: 12px;
+	text-align: center;
+	font-family: 'Catamaran', sans-serif;
+	color: white;
+	text-align: right;
+	margin-bottom: 7px
+}
+
+.secondPage{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+
+.centrallyAlign{
+	display: flex;
+	/*justify-content: center;
+	align-items: center;*/
+	text-align: center;
+	width: 725px;
+	height: 600px;
+}
+
+.downArrow{
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
+#parallaxFirst{
+	background-image: url('http://csci571.com/hw/hw3/images/snow1.jpg');
+	width: 725px;
+	height: 600px;
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
+
+#parallaxSecond{
+	background-image: url('http://csci571.com/hw/hw3/images/snow6.jpg');
+	width: 750px;
+	height: 680px
+}
