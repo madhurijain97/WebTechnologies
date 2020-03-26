@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+	<TITLE>>Homework 4</TITLE>
+	<HEAD>
+		<STYLE>
+		
+		input[type = text]:focus{
+			border-color: #66CCCC;
+			border-style: solid;
+			border-width: 2px;
+		}
+		
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<SCRIPT LANGUAGE = "Javascript">
+			function querySubmitted(formId){
+				//document.write(document.getElementById("text").value)
+				var URL = formId.urlText.value;
+				if(URL == ""){
+					alert("Error detected- Invalid Input.Please enter a file name");
+					return null;
+				}
+				function loadJSON(url) 
+				{
+					if (window.XMLHttpRequest)
+					{// code for IE7+, Firefox, Chrome, Opera, Safari
+						xmlhttp=new XMLHttpRequest();
+					} else 
+					{// code for IE6, IE5
+						xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); 
+					}
+					xmlhttp.open("GET",url,false); // "synchronous"
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send();
+					if(xmlhttp.status != 404){
+						jsonObj= JSON.parse(xmlhttp.responseText);
+					}
+					else{
+						alert("Error detected - Invalid filename");
+						return null;
+					}
+					
+					
+					return jsonObj; 
+				}
+				jsonObj = loadJSON(URL);
+				if (window.ActiveXObject) //if IE, simply execute script (due to async prop).
+				{ if (jsonObj.parseError.errorCode != 0) 
+					{
+						var myErr = jsonObj.parseError;
+						generateError(jsonObj);
+						hWin = window.open("", "Error", "height=300,width=340");
+						hWin.document.write(html_text);
+					} 
+					else
+					{ 
+						generateHTML(jsonObj);
+						hWin = window.open("", "Highest-grossing films", "height=1000,width=1000");
+						hWin.document.write(html_text); 
+					}
+					hWin.document.close();
+				} 
+				else //else if FF, execute script once JSON object has loaded
+				{ 	if(jsonObj != null){
+						jsonObj.onload=generateHTML(jsonObj);
+						if(jsonObj.onload == 1){ 
+						hWin = window.open("", "Highest-grossing films", "height=1000,width=1000");
+						hWin.document.write(html_text);
+						hWin.document.close();
+						}
+					}
+					else{
+						return null;
+					}
+				} 
+				 
+			}
+			
+			function generateHTML(jsonObj) 
+			{
+				if(jsonObj != null){
+					
+					root=jsonObj.DocumentElement;
+					html_text="<html><head><title>Highest-grossing films</title></head><body>";
+					html_text+="<table border='2'>";
+					headers = jsonObj.Mainline.Table.Header.Data;
+					console.log(headers);
+					checkIfFilmsExist = "true";
+					lengthOfTable = Object.keys(jsonObj.Mainline.Table).length;
+					console.log("lengthOfTable: " + lengthOfTable);
+					if(lengthOfTable == 1){
+						checkIfFilmsExist = "false";
+					}
+					
+					if(checkIfFilmsExist == "true"){
+						html_text+="<tbody>";
+						html_text+="<tr>";
+						x=0; y=0;
+						
+						for(i=0; i<headers.length; i++) 
+						{
+							header = headers[i];
+							console.log(header);
+							if(i == 0){
+								width = 7;
+							}
+							if(i == 1){
+								width = 3.8;
+							}
+							if(i == 2){
+								width = 27;
+							}
+							if(i == 3){
+								width = 6;
+							}
+							if(i == 4){
+								width = 46;
+							}
+							if(i == 5){
+								width = 11;
+							}
+							
+							html_text+="<th style = width:" + width + "%>" + header + "</th>";
+						}
+						html_text+="</tr>";
+						
+					
+					
+					// output out the values
+					
+						movies = jsonObj.Mainline.Table.Row
+						lengthMovies = movies.length
+						if(lengthMovies == 0){
+							alert("Error detected- No films");
+							return 0;
+						}
+						for(i=0;i<movies.length;i++) 
+						{
+							movieNodeList = movies[i]; 
+							html_text+="<tr>"; 
+							var movieKeys = Object.keys(movieNodeList);
+							for(j=0;j<movieKeys.length;j++)
+							{
+								prop = movieKeys[j];
+								if(movieKeys[j] == "Logo")
+								{//handle images separately
+									if(movieNodeList[prop].length > 0)
+										html_text+="<td><img src='"+ movieNodeList[prop] +"' width='"+130+"'; height='"+190+"' style = \"display: block; text-align: center\"></td>";
+									else
+										html_text+="<td></td>";
+									continue;
+								}
+								if(movieKeys[j] == "HomePage")
+								{
+									//Handle ahref links to wikipedia page
+									html_text += "<td><a href='" + movieNodeList[prop] + "'>" + movieNodeList[prop] + "</a></td>";
+									continue;
+								}
+								if(movieKeys[j] == "Hubs")
+								{
+									//Handle hubs
+									hubArray = movieNodeList[prop].Hub;
+									legthVal = hubArray.length;
+									for(k=0; k < legthVal; k++){
+										if(k == 0){
+											hubsText = "<td><ul><li><b>" + hubArray[0] + "</b></li>";											
+										}
+										else{
+											hubsText += "<li>" + hubArray[k] + "</li>";
+										}
+									}
+									if(legthVal > 0){
+										hubsText += "</ul></td>";
+									}
+									else
+										hubsText = "<td></td>";
+									html_text += hubsText;	
+									continue;
+								}
+								else 
+								{
+									html_text += "<td>" + movieNodeList[prop] + "</td>";
+									continue;
+								}
+							}
+							html_text+="</tr>";
+						}
+					html_text+="</tbody>";
+					html_text+="</table>";
+					html_text+="</body></html>";
+					return 1;
+					}
+					else{
+						console.log("First");
+						alert("No Films. Error detected");
+						return null;
+						console.log("Seconnd");
+						
+						console.log("Thrd");
+						return 0;
+					}
+					
+				}
+			}
+			
+		</SCRIPT>
+		<br><br><br><br><br><br>
+		<div style = "text-align: center; line-height: 2">
+			<form name = "firstPage" id = "firstPage" method = "POST">
+				<B>Enter URL for Highest-grossing films List JSON File<B>
+				<br>
+				<input type = "text" name = "urlText" value = "" id = "urlText">
+				<br>
+				<input type = "button" name = "Submit Query" value = "Submit Query" onClick = "querySubmitted(this.form)">
+			</form>
+		</div>
+		
+		
+	</BODY>
+<HTML>
